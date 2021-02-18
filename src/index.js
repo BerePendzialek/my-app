@@ -1,62 +1,66 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
+import ReactDOM from 'react-dom'
+import React, { useState } from 'react'
+import './index.css'
 
-function Square() {
-    return (
-      <button className="square">
-        {/* TODO */}
-      </button>
-    );
+function Square(props) {
+  return (
+    <button className="square" onClick={() => props.onClick()}>
+      {props.value}
+    </button>
+  )
+}
+
+function Board() {
+  const [squares, setSquares] = useState(Array(9).fill(null))
+
+  function handleClick(i) {
+    const newSquares = squares.slice()
+    newSquares[i] = 'X'
+    setSquares(newSquares)
   }
-  
-  function Board() {
-    function renderSquare(i) {
-      return <Square />;
-    }
-  
-    const status = 'Next player: X';
-  
-    return (
-      <div>
-        <div className="status">{status}</div>
-        <div className="board-row">
-          {renderSquare(0)}
-          {renderSquare(1)}
-          {renderSquare(2)}
-        </div>
-        <div className="board-row">
-          {renderSquare(3)}
-          {renderSquare(4)}
-          {renderSquare(5)}
-        </div>
-        <div className="board-row">
-          {renderSquare(6)}
-          {renderSquare(7)}
-          {renderSquare(8)}
-        </div>
+
+  function renderSquare(i) {
+    return <Square value={squares[i]} onClick={() => handleClick(i)} />
+  }
+
+  const status = 'Next player: X'
+
+  return (
+    <div>
+      <div className="status">{status}</div>
+      <div className="board-row">
+        {renderSquare(0)}
+        {renderSquare(1)}
+        {renderSquare(2)}
       </div>
-    );
-  }
-  
-  function Game() {
-    return (
-      <div className="game">
-        <div className="game-board">
-          <Board />
-        </div>
-        <div className="game-info">
-          <div>{/* status */}</div>
-          <ol>{/* TODO */}</ol>
-        </div>
+      <div className="board-row">
+        {renderSquare(3)}
+        {renderSquare(4)}
+        {renderSquare(5)}
       </div>
-    );
-  }
-  
-  // ========================================
-  
-  ReactDOM.render(
-    <Game />,
-    document.getElementById('root')
-  );
-  
+      <div className="board-row">
+        {renderSquare(6)}
+        {renderSquare(7)}
+        {renderSquare(8)}
+      </div>
+    </div>
+  )
+}
+
+function Game() {
+  return (
+    <div className="game">
+      <div className="game-board">
+        <Board />
+      </div>
+      <div className="game-info">
+        <div>{/* status */}</div>
+        <ol>{/* TODO */}</ol>
+      </div>
+    </div>
+  )
+}
+
+// ========================================
+
+ReactDOM.render(<Game />, document.getElementById('root'))
